@@ -324,6 +324,7 @@ def index_page():
         ["5",       "Output & Results",                          "13"],
         ["6",       "Conclusion & Future Enhancements",          "15"],
         ["7",       "References",                                "16"],
+        ["8",       "GitHub Repository Link",                   "17"],
     ]
     items.append(tbl(index_data, [2.5*cm, 11*cm, 2*cm]))
     items.append(PageBreak())
@@ -699,6 +700,82 @@ def chapter7():
     return items
 
 
+# ── Chapter 8: GitHub ─────────────────────────────────────────────────────────
+def chapter8():
+    items = []
+    items.append(chapter("CHAPTER 8: GITHUB REPOSITORY LINK"))
+    items.append(SP(0.5))
+
+    items.append(B(
+        "The complete source code, project report, and all associated files for this project "
+        "are publicly available on GitHub. The repository can be accessed, cloned, and run "
+        "by following the instructions in the <b>README.md</b> file."
+    ))
+    items.append(SP(0.5))
+
+    # Link card
+    link_tbl = Table([[
+        Paragraph(
+            "🔗 &nbsp; https://github.com/Mouliksharma1/"
+            "Interactive-Pathfinding-Visualizer-Algorithm-Benchmark-Suite",
+            ParagraphStyle('link', fontName='Courier-Bold', fontSize=11,
+                           alignment=TA_LEFT, leading=18, textColor=HexColor('#00B0FF'))
+        )
+    ]], colWidths=[W - 5*cm])
+    link_tbl.setStyle(TableStyle([
+        ('BACKGROUND',    (0,0), (-1,-1), C_NAVY),
+        ('TOPPADDING',    (0,0), (-1,-1), 16),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 16),
+        ('LEFTPADDING',   (0,0), (-1,-1), 16),
+        ('RIGHTPADDING',  (0,0), (-1,-1), 16),
+        ('ROUNDEDCORNERS', [8]),
+        ('BOX',           (0,0), (-1,-1), 1.5, C_ACCENT),
+    ]))
+    items.append(link_tbl)
+    items.append(SP(1))
+
+    items.append(SH("Repository Contents"))
+    repo_data = [
+        ["File / Folder",                                       "Description"],
+        ["main.py",                                             "Main application — run this to launch the visualizer"],
+        ["pathfinder/algorithms/bfs.py",                        "Breadth-First Search algorithm"],
+        ["pathfinder/algorithms/dfs.py",                        "Depth-First Search algorithm"],
+        ["pathfinder/algorithms/astar.py",                      "A* Search algorithm"],
+        ["pathfinder/algorithms/greedy.py",                     "Greedy Best-First Search algorithm"],
+        ["pathfinder/maze_generator.py",                        "Recursive Backtracking & Prim's maze generators"],
+        ["pathfinder/benchmark.py",                             "Benchmarking engine & CSV export"],
+        ["pathfinder/charts.py",                                "Matplotlib chart renderer"],
+        ["generate_report.py",                                  "PDF report generator script"],
+        ["Project_Report_Pathfinding_Visualizer.pdf",           "Complete project report (this document)"],
+        ["README.md",                                           "Setup instructions and feature guide"],
+    ]
+    items.append(tbl(repo_data, [7*cm, 8.5*cm]))
+    items.append(SP(1))
+
+    items.append(SH("How to Run"))
+    items.append(B("Clone the repository and install dependencies:"))
+    from reportlab.platypus import Table as RLTable, TableStyle as RLTableStyle
+    run_tbl = Table([[
+        Paragraph(
+            "git clone https://github.com/Mouliksharma1/Interactive-Pathfinding-Visualizer-Algorithm-Benchmark-Suite.git<br/>"
+            "cd Interactive-Pathfinding-Visualizer-Algorithm-Benchmark-Suite<br/>"
+            "pip install pygame matplotlib numpy pandas<br/>"
+            "python main.py",
+            ParagraphStyle('runcmd', fontName='Courier', fontSize=10,
+                           leading=16, textColor=HexColor('#A8FF78'))
+        )
+    ]], colWidths=[W - 5*cm])
+    run_tbl.setStyle(TableStyle([
+        ('BACKGROUND',    (0,0), (-1,-1), HexColor('#1a1a2e')),
+        ('TOPPADDING',    (0,0), (-1,-1), 14),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 14),
+        ('LEFTPADDING',   (0,0), (-1,-1), 16),
+        ('BOX',           (0,0), (-1,-1), 1, HexColor('#333366')),
+    ]))
+    items.append(run_tbl)
+    return items
+
+
 # ── Build ──────────────────────────────────────────────────────────────────────
 def build():
     doc = SimpleDocTemplate(
@@ -723,6 +800,7 @@ def build():
     story += chapter5()
     story += chapter6()
     story += chapter7()
+    story += chapter8()
 
     doc.build(story, onFirstPage=on_page, onLaterPages=on_page)
     print(f"✅  PDF saved: {OUTPUT}")
